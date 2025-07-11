@@ -8,10 +8,9 @@
 import SwiftUI
 
 class UserProfile: ObservableObject {
-    @Published var profileImage: String = "heart.fill"
+    @Published var profileImage: String = "sun.max.fill"
     @Published var name: String = "John Doe"
     @Published var age: Int = 0
-    @Published var description: String = "Your bio"
     @Published var birthDay: Int = 1
     @Published var birthMonth: String = "January"
     @Published var favoriteColor: String = "blue"
@@ -43,21 +42,22 @@ struct ProfileView: View {
                     .frame(width: 50, height: 50)
                     .padding()
                 Text(user.name)
-                Text(String(user.age))
+                Text("Age: \(user.age)")
             }
             .padding()
             VStack {
-                Text(user.description)
-                    .multilineTextAlignment(.center)
-                    .frame(width: 180)
-                Text(String(user.birthDay) + " " + user.birthMonth)
-                Text(user.favoriteColor)
-                Text(user.favoriteGame)
+                Text("Birthday: \(user.birthDay) \(user.birthMonth)")
+                    .padding(.top, 15)
+                Text("Fave color: \(user.favoriteColor)")
+                Text("Favorite game: \(user.favoriteGame)")
+                    .padding()
             }
             .padding()
         }
         .background(user.backgroundColor)
         .foregroundColor(user.foregroundColor)
+        .cornerRadius(20)
+        .shadow(color: .gray,radius: 10, x: 3, y: 7)
         .padding()
         }
 }
@@ -88,8 +88,6 @@ struct ProfileFormView: View {
                     }
                 ))
                 .keyboardType(.numberPad)
-                TextEditor(text: $user.description)
-                    .frame(minHeight: 100)
                 Picker("Birth day", selection: $user.birthDay) {
                     ForEach(1..<32) { day in
                         Text("\(day - 1)")
